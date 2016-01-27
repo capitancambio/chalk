@@ -88,6 +88,11 @@ type Style interface {
 	// WithStyle allows us to set the text style in a builder pattern
 	// style.
 	WithTextStyle(TextStyle) Style
+	//returns the prefix of this style
+	Prefix() string
+	//returns the suffix of this style
+	Suffix() string
+
 	String() string
 }
 
@@ -115,6 +120,12 @@ func (s *style) String() string {
 
 func (s *style) Style(val string) string {
 	return fmt.Sprintf("%s%s%s", s, s.textStyle.TextStyle(val), Reset)
+}
+func (s *style) Prefix() string {
+	return fmt.Sprintf("%s%s", s, s.textStyle.start)
+}
+func (s *style) Suffix() string {
+	return fmt.Sprintf("%s%s", s.textStyle.stop, Reset)
 }
 
 func (s *style) Foreground(col Color) {
